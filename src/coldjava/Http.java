@@ -7,6 +7,7 @@ import java.net.URL;
 
 public class Http implements Protocol {
     public String doProtocol(String Uri) {
+        // Adapted from http://www.vogella.com/articles/JavaNetworking/article.html#javanetwork_example_readpage
         BufferedReader in = null;
         StringBuilder result = new StringBuilder();
 	try {
