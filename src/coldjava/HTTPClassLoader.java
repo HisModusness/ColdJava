@@ -24,13 +24,15 @@ public class HTTPClassLoader extends ClassLoader {
         if (className == null) {
             throw new ClassNotFoundException();
         }
-        String directoryResource = className.replace(".", "/") + ".class";
+        String directoryResource = className;//.replace(".", "/") + ".class";
         byte[] classBytes;
         try {
             classBytes = getClassBytes(directoryResource);
         } catch (IOException e) {
             throw new ClassNotFoundException(className + "could not be found at " + host);
         }
+        className = className.replace("/", ".");
+        className = className.substring(0, className.indexOf(".class"));
         return defineClass(className, classBytes, 0, classBytes.length);
     }
 

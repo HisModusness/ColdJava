@@ -7,8 +7,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URI;
 import java.net.URL;
+import java.util.HashMap;
 
 public class ProtocolHandler {
+    static HashMap<String, Protocol> cache = new HashMap<String, Protocol>();
+    
+    public ProtocolHandler() {
+        if (!cache.containsKey("http")) {
+            cache.put("http", new Http());
+        }
+    }
 
     public Protocol getProtocol(String Uri) {
         BufferedReader in = null;
@@ -18,17 +26,26 @@ public class ProtocolHandler {
         Protocol testProto = null;
 
         try {
-            URI uri = new URI(Uri);
-
-            if (uri.getRawSchemeSpecificPart().equals("http")) { //HTTP is already known, so it can run
-                URL url = new URL(Uri);
-                in = new BufferedReader(new InputStreamReader(url.openStream()));
-
-                String inputLine;
-                while ((inputLine = in.readLine()) != null) {
-                    result.append(inputLine);
-                }
-            } else {
+            String protocol;
+            if (Uri.indexOf(':') == Uri.length() - 1) {
+                protocol = Uri;
+            }
+            else {
+                URI uri = new URI(Uri);
+                protocol = uri.getScheme();
+            }
+            if (cache.containsKey(protocol)) {
+                return cache.get(protocol);
+            }
+//            if (uri.getRawSchemeSpecificPart().equals("http")) { //HTTP is already known, so it can run
+//                URL url = new URL(Uri);
+//                in = new BufferedReader(new InputStreamReader(url.openStream()));
+//
+//                String inputLine;
+//                while ((inputLine = in.readLine()) != null) {
+//                    result.append(inputLine);
+//                }
+//            } else {
                 Socket sock = new Socket("localhost", 23657);                                             //Opens the socket to the server
 
                 PrintWriter printOut = new PrintWriter(sock.getOutputStream(), true);
@@ -51,16 +68,16 @@ public class ProtocolHandler {
 
                 System.out.println(address);                                                              //Retrieves the address of the class file
 
-                HTTPClassLoader load = new HTTPClassLoader("localhost", 23657, "ccoldjava");
+                HTTPClassLoader load = new HTTPClassLoader("localhost", 23657, "");
 
-                Class protoClass = load.findClass("Time");
+                Class protoClass = load.findClass(address);
                 testProto = (Protocol) protoClass.newInstance();
 
                 printOut.close();
                 readIn.close();
                 stdIn.close();
                 sock.close();
-            }
+            //}
 
         } catch (Exception e) {
             System.out.println("unknown protocol");
