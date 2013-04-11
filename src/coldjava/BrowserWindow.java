@@ -26,7 +26,7 @@ public class BrowserWindow extends JFrame {
     
     public BrowserWindow()
     {
-  super("A Browser");
+  super("ColdJava");
 	contentPane = new ContentPane();
 	setContentPane(contentPane);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
