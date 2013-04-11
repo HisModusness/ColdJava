@@ -1,4 +1,3 @@
-
 package coldjava;
 
 import java.awt.BorderLayout;
@@ -26,7 +25,7 @@ public class BrowserWindow extends JFrame {
     
     public BrowserWindow()
     {
-  super("ColdJava");
+  	super("ColdJava");
 	contentPane = new ContentPane();
 	setContentPane(contentPane);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
