@@ -22,10 +22,12 @@ import javax.swing.text.html.HTMLEditorKit;
 public class BrowserWindow extends JFrame {
 
     private ContentPane contentPane;
+    private ProtocolHandler handler;
     
     public BrowserWindow()
     {
   	super("ColdJava");
+  	handler = new ProtocolHandler();
 	contentPane = new ContentPane();
 	setContentPane(contentPane);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,10 +42,8 @@ public class BrowserWindow extends JFrame {
     }
     
     public void setAddress(String location) {
-	//THIS IS WHERE I ASK TIM'S CODE WHAT A LOCATION MEANS AND HOPEFULLY GET SOME HTML BACK
-	//UNTIL THEN, DEMO CODE:
-	Http http = new Http();
-	contentPane.setContent(http.doProtocol(location), location);
+	Protocol protocol = handler.getProtocol(location);
+	contentPane.setContent(protocol.doProtocol(location), location);
 	pack();
     }
     
