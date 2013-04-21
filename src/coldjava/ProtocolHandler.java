@@ -28,7 +28,7 @@ public class ProtocolHandler {
         try {
             String protocol;
             if (Uri.indexOf(':') == Uri.length() - 1) {
-                protocol = Uri;
+                protocol = Uri.substring(0, Uri.length() - 1);
             }
             else {
                 URI uri = new URI(Uri);
@@ -50,7 +50,7 @@ public class ProtocolHandler {
 
                 PrintWriter printOut = new PrintWriter(sock.getOutputStream(), true);
                 BufferedReader readIn = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-                printOut.println("CLASS time HTTP/1.0");
+                printOut.println("CLASS " + protocol + " HTTP/1.0");
                 printOut.println("");
 
                 BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
