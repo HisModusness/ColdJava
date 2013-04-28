@@ -70,7 +70,7 @@ public class BrowserWindow extends JFrame {
             upload.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.CTRL_MASK));
             upload.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent action) {
-                   UploadPanel up = new UploadPanel();
+                   UploadPanel up = new UploadPanel(BrowserWindow.this);
                } 
             });
             file.add(upload);
@@ -167,8 +167,8 @@ public class BrowserWindow extends JFrame {
         JTextField fileEntry;
                 
         
-        public UploadPanel() {
-            
+        public UploadPanel(JFrame parent) {
+            super("Upload");
             setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
             
             JPanel labels = new JPanel(new GridLayout(3, 1));
@@ -233,6 +233,7 @@ public class BrowserWindow extends JFrame {
             add(buttons);
             
             pack();
+            setLocationRelativeTo(parent);
             setVisible(true);
         }
         
