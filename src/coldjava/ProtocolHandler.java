@@ -116,7 +116,7 @@ public class ProtocolHandler {
                     }
                 }
                 
-                source.append(currentLine);
+                source.append(currentLine).append("\n");
                 currentLine = fileIn.readLine();
             }
             if (!packageName.equals("")) packageName += ".";
@@ -137,10 +137,10 @@ public class ProtocolHandler {
             readIn = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             
             printOut.println("UPLOAD " + packageName + " HTTP/1.1");
+            printOut.println("Content-Length: " + source.length());
             printOut.println("protocol: " + protocolName);
             printOut.write(source.toString());
             printOut.flush();
-            printOut.print((char)255);
             //printOut.close();
             
             String response = readIn.readLine();
