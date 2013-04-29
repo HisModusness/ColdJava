@@ -139,6 +139,7 @@ public class ProtocolHandler {
             printOut.println("UPLOAD " + packageName + " HTTP/1.1");
             printOut.println("Content-Length: " + source.length());
             printOut.println("protocol: " + protocolName);
+            printOut.println("");
             printOut.write(source.toString());
             printOut.flush();
             //printOut.close();
